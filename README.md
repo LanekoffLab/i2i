@@ -39,6 +39,10 @@ The live script does not have all quality of life features available in the comp
 # Cite
 
 Please cite any use of this software as: 
+Ion-to-Image, i2i, a Mass Spectrometry Imaging Data Analysis Platform for Continuous Ionization Techniques
+Johan Lillja, Kyle D. Duncan, and Ingela Lanekoff
+Analytical Chemistry Article ASAP
+DOI: 10.1021/acs.analchem.3c01615
 
 # Reporting problems
 
