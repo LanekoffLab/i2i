@@ -34,12 +34,17 @@ parfor k= 1:size(source_files,1)
         int_vec = typecast(textBytes,precision)';
         
         % Store data in the data_out cell array
-        name_attributes = [file.spectrumList.spectrum(i).cvParam.nameAttribute];
-        total_ion_current_index = find(strcmp(name_attributes,'total ion current'));
+        cvParam_name_attributes = [file.spectrumList.spectrum(i).cvParam.nameAttribute];
+        scanList_scan_name_attributes = [file.spectrumList.spectrum(i).scanList.scan.cvParam.nameAttribute];
+
+        scan_start_time_current_index = find(strcmp(scanList_scan_name_attributes, 'scan start time'));
+        total_ion_current_index = find(strcmp(cvParam_name_attributes,'total ion current'));
+        filter_string_current_index = find(strcmp(scanList_scan_name_attributes, 'filter string'));
+            
         data_out{i,1} = [mz_vec, int_vec];
-        data_out{i,2} = file.spectrumList.spectrum(i).scanList.scan.cvParam(1).valueAttribute;
+        data_out{i,2} = file.spectrumList.spectrum(i).scanList.scan.cvParam(scan_start_time_current_index).valueAttribute;
         data_out{i,3} = file.spectrumList.spectrum(i).cvParam(total_ion_current_index).valueAttribute;
-        data_out{i,4} = file.spectrumList.spectrum(i).scanList.scan.cvParam(2).valueAttribute;
+        data_out{i,4} = file.spectrumList.spectrum(i).scanList.scan.cvParam(filter_string_current_index).valueAttribute;
     end
     raw_dat{k}=data_out;
     send(D,i);
@@ -52,10 +57,8 @@ end
         p = p + 1;
     end
 close(h)
-
 for i = 1:size(raw_dat,1)
     scanheaders = [raw_dat{1,1}{:,4}]';
 end
 unique_scanheaders = unique(scanheaders);
 end
-
